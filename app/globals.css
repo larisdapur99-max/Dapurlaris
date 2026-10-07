@@ -1,0 +1,153 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #fbf5ea;
+  --color-cream-dark: #f5ead6;
+  --color-beige: #f6ecda;
+  --color-coklat: #3e2723;
+  --color-coklat-soft: #6d4c41;
+  --color-terra: #b85c38;
+  --color-terra-dark: #9c4a2c;
+  --color-hijau: #55662f;
+  --color-hijau-dark: #3f5222;
+  --color-hijau-deep: #33411d;
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-lora: "Lora", Georgia, serif;
+  --font-sans: "DM Sans", system-ui, sans-serif;
+  --font-poppins: "Poppins", system-ui, sans-serif;
+}
+
+:root {
+  --background: #fbf5ea;
+  --foreground: #3e2723;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "DM Sans", system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #55662f;
+  color: #fff;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-lora {
+  font-family: var(--font-lora);
+}
+
+.font-poppins {
+  font-family: var(--font-poppins);
+}
+
+/* Premium food card — 3D + shadow berlapis (warna/diameter via CSS var dari admin) */
+.card-food {
+  background: var(--card-bg, #fffdf8);
+  border: 1px solid rgba(62, 39, 35, 0.09);
+  border-radius: var(--card-radius, 16px);
+  overflow: hidden;
+  box-shadow: var(--card-shadow, 0 2px 8px rgba(62, 39, 35, 0.06), 0 12px 30px rgba(62, 39, 35, 0.12));
+  transform: perspective(1000px) translateZ(0);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-food:hover {
+  transform: perspective(1000px) rotateX(3deg) translateY(-7px);
+  box-shadow: var(--card-shadow-hover, 0 6px 14px rgba(62, 39, 35, 0.1), 0 26px 55px rgba(62, 39, 35, 0.22));
+}
+.card-food img {
+  transition: transform 0.5s ease;
+}
+.card-food:hover img {
+  transform: scale(1.05);
+}
+
+/* Buttons — consistent premium sizing */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 48px;
+  padding: 0 1.75rem;
+  border-radius: 10px;
+  background: #55662f;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.btn-primary:hover {
+  background: #3f5222;
+  transform: translateY(-1px);
+}
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 48px;
+  padding: 0 1.75rem;
+  border-radius: 10px;
+  background: #fffdf8;
+  color: #3e2723;
+  border: 1px solid rgba(62, 39, 35, 0.3);
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.btn-secondary:hover {
+  background: #3e2723;
+  color: #fff;
+  transform: translateY(-1px);
+}
+/* keep old class working for admin */
+.btn-wa {
+  background: #55662f;
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+.btn-wa:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+main {
+  animation: pageIn 0.5s ease-out both;
+}
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+.nav-progress {
+  position: fixed;
+  top: 0;
+  left: -40%;
+  height: 3px;
+  width: 40%;
+  z-index: 9999;
+  border-radius: 0 3px 3px 0;
+  background: linear-gradient(90deg, #55662f, #b85c38);
+  animation: navSlide 0.9s ease-in-out infinite;
+}
+@keyframes navSlide {
+  from { left: -40%; }
+  to { left: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

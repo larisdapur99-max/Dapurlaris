@@ -1,0 +1,67 @@
+// Dapur Laris - Prisma schema (PostgreSQL lokal, pola meniru PB.GPP)
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Key-value seperti SiteSetting PB.GPP: semua teks/SEO/WA/logo disimpan di sini
+model SiteSetting {
+  id        Int      @id @default(autoincrement())
+  key       String   @unique
+  value     String   @db.Text
+  updatedAt DateTime @updatedAt
+}
+
+// 8 menu kue basah (pengganti Schedule/Match PB.GPP)
+model Product {
+  id        Int      @id @default(autoincrement())
+  nama      String
+  deskripsi String   @default("") @db.Text
+  harga     Int      @default(0) // harga per pcs dalam rupiah, 0 = tanpa harga
+  image     String   @default("")
+  kategori  String   @default("Kue Basah")
+  urutan    Int      @default(0)
+  aktif     Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// 3 paket (pengganti Match PB.GPP)
+model Package {
+  id         Int      @id @default(autoincrement())
+  nama       String
+  deskripsi  String   @default("") @db.Text
+  hargaMulai Int      @default(0) // 0 = hubungi kami / custom
+  hargaLabel String   @default("") // mis. "Mulai dari Rp 15.000" atau "Hubungi Kami"
+  image      String   @default("")
+  urutan     Int      @default(0)
+  aktif      Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model GalleryItem {
+  id        Int      @id @default(autoincrement())
+  image     String
+  caption   String   @default("")
+  urutan    Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+// Pesanan / inquiry yang masuk via form landing (opsional, tampil di admin)
+model Order {
+  id        Int      @id @default(autoincrement())
+  nama      String
+  wa        String   @default("")
+  paket     String   @default("")
+  jumlah    Int      @default(0)
+  tanggal   String   @default("")
+  catatan   String   @default("") @db.Text
+  status    String   @default("BARU") // BARU | DIPROSES | SELESAI | BATAL
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
